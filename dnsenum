@@ -1,0 +1,17 @@
+DNSenum
+DNSEnum is a great script specifically designed for DNS recon activities. Written in Perl, 
+it can help you create a full DNS map of any domain name on the Internet.
+
+Available in most distros, including Ubuntu, Fedora, and of course, Kali Linux, it offers an easy syntax for all who are performing reconnaissance tasks.
+
+What can I do with DNSenum?
+Fetch NS, MX, AXFR and A records, as well as remote BIND version from the DNS server. Apart from that, 
+it also allows you to perform Google scraping using Google dorks such as all 
+inurl: -www site:domain, launch brute force subdomain reconnaissance attacks using word lists, and get a full list of C class domain network ranges. 
+It also allows WHOIS queries on each one of them and reverse DNS lookups against netranges.
+
+How does it work?
+
+Let’s look at an example where we’ll be avoiding reverse lookup (–noreverse) and saving the output into a file.xml (-o) while querying securitytrails.com:
+
+[root@research ~]# dnsenum --noreverse -o file.xml securitytrails.com

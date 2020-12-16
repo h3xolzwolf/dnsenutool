@@ -15,3 +15,15 @@ How does it work?
 Let’s look at an example where we’ll be avoiding reverse lookup (–noreverse) and saving the output into a file.xml (-o) while querying securitytrails.com:
 
 [root@research ~]# dnsenum --noreverse -o file.xml securitytrails.com
+
+Expected output:
+Picture
+
+As shown in the result, DNSenum was able to get A records for the main hostname, as well as NS and MX records, while performing a DNS zone transfer by querying the AXFR record.
+
+DNSenum also allows you to use the Google search engine to “scrape” the results and get a list of subdomains. 
+We’ll now combine this with the “-p” argument, which specifies the number of pages searched on Google that will be processed (by default 5 pages). 
+The “-s” option defines the maximum number of subdomains that will be extracted from Google (default is 15).
+
+dnsenum --dnsserver ns3.p16.dynect.net github.com -p 10 -s 50
+Picture

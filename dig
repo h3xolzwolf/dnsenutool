@@ -1,0 +1,45 @@
+Dig
+
+Once again, our beloved dig command comes to the rescue, 
+helping us perform DNS enumeration by querying popular types of DNS records. Here’s how it’s done.
+
+To perform a simple domain lookup to fetch A records:
+dig securitytrails.com +short
+
+Expected output:
+[research@securitytrails.com ~]$ dig securitytrails.com +short
+151.139.243.5
+[research@securitytrails.com ~]$
+Now let’s grab some mail server information adding -t mx parameters:
+
+[research@securitytrails.com ~]$ dig securitytrails.com -t mx +short
+10 aspmx2.googlemail.com.
+1 aspmx.l.google.com.
+5 alt2.aspmx.l.google.com.
+5 alt1.aspmx.l.google.com.
+10 aspmx3.googlemail.com.
+[research@securitytrails.com ~]$
+That’s right, securitytrails.com uses Google Apps for the email services.
+
+The same goes for NS, CNAME and other records:
+
+dig securitytrails.com -t ns +short
+Output:
+
+[research@securitytrails.com ~]$ dig securitytrails.com -t ns +short
+ns07.domaincontrol.com.
+ns08.domaincontrol.com.
+[research@securitytrails.com ~]$
+Great! With this last command we now have the authoritative name servers.
+
+Of course, dig allows DNS transfers and this leads us to use the AXFR argument against the ns08.domaincontrol.com NS, as you see below:
+
+[researcg@securitytrails.com ~]$ dig axfr securitytrails.com ns08.domaincontrol.com
+; <<>> DiG 9.11.10-RedHat-9.11.10-1.fc30 <<>> axfr securitytrails.com ns08.domaincontrol.com
+;; global options: +cmd
+; Transfer failed.
+[research@securitytrails.com ~]$
+And the transfer failed, because our DNS servers are well secured.
+
+Recon tip: sometimes a particular name server may be configured to reject AXFR requests. 
+However, some others may not—that’s why we suggest you launch AXFR queries against all the authoritative NS.

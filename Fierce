@@ -1,0 +1,34 @@
+Fierce
+Fierce is another great DNS reconnaissance tool. 
+Written in Perl, Fierce offers numerous options for performing DNS enumeration by scanning domains in just minutes. 
+Its syntax is pretty easy, as you can see:
+
+fierce -dns securitytrails.com
+Expected output:
+
+root@securitytrails-kali:~# fierce -dns securitytrails.com
+DNS Servers for securitytrails.com:
+ns08.domaincontrol.com
+ns07.domaincontrol.com
+Trying zone transfer first...
+Testing ns08.domaincontrol.com
+Request timed out or transfer not allowed.
+Testing ns07.domaincontrol.com
+Request timed out or transfer not allowed.
+Unsuccessful in zone transfer (it was worth a shot)
+Okay, trying the good old fashioned way... brute force
+Checking for wildcard DNS...
+Nope. Good.
+Now performing 2280 test(s)...
+151.139.243.5 blog.securitytrails.com
+151.139.243.5 ftp.securitytrails.com
+Subnets found (may want to probe here using nmap or unicornscan):
+151.139.243.0-255 : 2 hostnames found.
+Done with Fierce scan: http://ha.ckers.org/fierce/
+Found 2 entries.
+Have a nice day.
+root@securitytrails-kali:~#
+Fierce was able to discover a few subdomains, along with NS records, and attempted to run a DNS transfer, which obviously failed.
+
+By adding the –wide, you can also extend the fierce scan to the entire class C after finding any matching hostnames in that class C. 
+This can take a lot of time to finish, especially on networks with a lot of hosts, so keep that in mind.

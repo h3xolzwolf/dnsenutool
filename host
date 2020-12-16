@@ -1,0 +1,76 @@
+Host
+Host is a command used to resolve the IP address of any given domain name.
+
+As an example, we’ll use it to get all the public DNS records from securitytrails.com. See below:
+
+host securitytrails.com
+Expected output:
+
+[research@securitytrails.com ~]$ host securitytrails.com
+securitytrails.com has address 151.139.243.5
+securitytrails.com mail is handled by 5 alt2.aspmx.l.google.com.
+securitytrails.com mail is handled by 5 alt1.aspmx.l.google.com.
+securitytrails.com mail is handled by 10 aspmx3.googlemail.com.
+securitytrails.com mail is handled by 1 aspmx.l.google.com.
+securitytrails.com mail is handled by 10 aspmx2.googlemail.com.
+The default host command retrieves A, AAAA and MX records.
+
+If you want to specify any specific type of DNS record, you can use the -t option. For example:
+
+host -t ns securitytrails.com
+Expected output:
+
+[research@securitytrails.com ~]$ host -t ns securitytrails.com
+securitytrails.com name server ns08.domaincontrol.com.
+securitytrails.com name server ns07.domaincontrol.com.
+What if you want to grab MX records? Just use -t mx, as shown here:
+
+[research@securitytrails.com ~]$ host -t mx securitytrails.com
+securitytrails.com mail is handled by 10 aspmx3.googlemail.com.
+securitytrails.com mail is handled by 5 alt2.aspmx.l.google.com.
+securitytrails.com mail is handled by 10 aspmx2.googlemail.com.
+securitytrails.com mail is handled by 1 aspmx.l.google.com.
+securitytrails.com mail is handled by 5 alt1.aspmx.l.google.com.
+
+The -t option can be used to request any recognized query type such as: 
+CNAME, NS, SOA, TXT, DNSKEY, AXFR, etc. If no query type is specified, host by default will look for A, AAAA and MX records.
+
+Having said that, let’s try to perform a full DNS transfer:
+
+[research@securitytrails.com ~]$ host -t axfr securitytrails.com ns08.domaincontrol.com
+Trying "securitytrails.com"
+Host securitytrails.com not found: 9(NOTAUTH)
+; Transfer failed.
+[research@securitytrails.com ~]$
+No luck :), our DNS server doesn’t allow AXFR transfers by default.
+
+In the case of a successful DNS transfer, you should be able to get the full DNS zone for the given domain name, 
+as you see below—notice this time we are using -l option, 
+which is another way to list all DNS records from a domain name—while testing the vulnerable site zonetransfer.me:
+
+[research@securitytrails.com ~]$ host -l zonetransfer.me nsztm1.digi.ninja
+Using domain server:
+Name: nsztm1.digi.ninja
+Address: 81.4.108.41#53
+Aliases:
+zonetransfer.me has address 5.196.105.14
+zonetransfer.me name server nsztm1.digi.ninja.
+zonetransfer.me name server nsztm2.digi.ninja.
+14.105.196.5.IN-ADDR.ARPA.zonetransfer.me domain name pointer www.zonetransfer.me.
+asfdbbox.zonetransfer.me has address 127.0.0.1
+canberra-office.zonetransfer.me has address 202.14.81.230
+dc-office.zonetransfer.me has address 143.228.181.132
+deadbeef.zonetransfer.me has IPv6 address dead:beaf::
+email.zonetransfer.me has address 74.125.206.26
+home.zonetransfer.me has address 127.0.0.1
+internal.zonetransfer.me name server intns1.zonetransfer.me.
+internal.zonetransfer.me name server intns2.zonetransfer.me.
+intns1.zonetransfer.me has address 81.4.108.41
+intns2.zonetransfer.me has address 167.88.42.94
+office.zonetransfer.me has address 4.23.39.254
+ipv6actnow.org.zonetransfer.me has IPv6 address 2001:67c:2e8:11::c100:1332
+owa.zonetransfer.me has address 207.46.197.32
+alltcpportsopen.firewall.test.zonetransfer.me has address 127.0.0.1
+vpn.zonetransfer.me has address 174.36.59.154
+www.zonetransfer.me has address 5.196.105.14
+[research@securitytrails.com ~]$

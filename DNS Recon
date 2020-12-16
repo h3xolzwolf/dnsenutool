@@ -1,0 +1,17 @@
+DNSRecon is another great script that can help you discover DNS data from any given domain name.
+
+It allows you to enumerate all types of DNS records, including A, AAAA, SPF, TXT, SOA, NS and MX, 
+and also includes a brute force technique for grabbing subdomain and host A and AAAA records based on a wordlist.
+
+A cool thing we noticed is that it supports checking for cached A and AAAA DNS records on the DNS servers, as well as local DNS enumeration capabilities.
+
+How can I perform DNS exploration with DNSRecon?
+
+The easiest way is by using the -d parameter, as you see below:
+
+dnsrecon -d domain.com
+
+Here we performed this dns enumeration against linkedin.com, and this was the result:
+Picture
+
+As shown, it was able not only to fetch multiple records (MX, A, AAAA, TXT, SRV and NS), but also to find some exposed bind versions from their DNS servers.

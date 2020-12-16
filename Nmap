@@ -1,0 +1,27 @@
+Nmap was our #1 choice when we reviewed the best port scanners, but it’s really more than that. This time it will help us reveal DNS information from a remote domain name.
+
+By using the dns-brute script, Nmap will attempt to enumerate DNS hostnames by brute forcing popular subdomain names. 
+In this case, we did it against microsoft.com and this was the result:
+
+[root@research ~]# nmap -T4 -p 53 --script dns-brute microsoft.com
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-10-02 11:56 -03
+Nmap scan report for microsoft.com (40.113.200.201)
+Host is up (0.21s latency).
+Other addresses for microsoft.com (not scanned): 40.76.4.15 104.215.148.63 40.112.72.205 13.77.161.179
+PORT STATE SERVICE
+53/tcp filtered domain
+Host script results:
+| dns-brute:
+| DNS Brute-force hostnames:
+| admin.microsoft.com - 13.107.9.156
+| admin.microsoft.com - 2620:1ec:4:0:0:0:0:156
+| ads.microsoft.com - 23.100.75.192
+| alerts.microsoft.com - 40.112.72.205
+| apps.microsoft.com - 23.44.181.123
+| id.microsoft.com - 13.107.6.190
+| info.microsoft.com - 192.28.149.178
+| test.microsoft.com - 104.211.31.212
+|_ news.microsoft.com - 192.237.225.141
+Nmap done: 1 IP address (1 host up) scanned in 10363.72 seconds
+[root@research ~]
+While this isn’t the most complete DNS recon option, it does help as an alternative source of information during your data collection process.
